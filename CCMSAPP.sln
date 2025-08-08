@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{02EA681E-C7D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portal", "Portal", "{795A1929-2963-4B3A-9A3A-461C9EF47DD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{75B08F9E-0BEC-4907-AA06-C2B5345678FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +21,17 @@ Global
 		{06C85ECF-C468-4716-A43F-B61B1B66F448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06C85ECF-C468-4716-A43F-B61B1B66F448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06C85ECF-C468-4716-A43F-B61B1B66F448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B08F9E-0BEC-4907-AA06-C2B5345678FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B08F9E-0BEC-4907-AA06-C2B5345678FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B08F9E-0BEC-4907-AA06-C2B5345678FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B08F9E-0BEC-4907-AA06-C2B5345678FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{06C85ECF-C468-4716-A43F-B61B1B66F448} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{75B08F9E-0BEC-4907-AA06-C2B5345678FF} = {795A1929-2963-4B3A-9A3A-461C9EF47DD8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C51A25A-B00C-4A3D-960B-CF61BDEDE030}
