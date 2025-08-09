@@ -19,7 +19,7 @@ namespace Portal.Authentication
             _localStorage = localStorage;
         }
 
-        public async Task<AuthenticatedUserModel> LoginAsync(AuthenticationUserModel userForAuthentication)
+        public async Task<AuthenticatedUserModel> Login(AuthenticationUserModel userForAuthentication)
         {
             var data = new FormUrlEncodedContent(new[]
             {
@@ -28,10 +28,10 @@ namespace Portal.Authentication
                 new KeyValuePair<string, string>("password", userForAuthentication.Password)
             });
 
-            var authResponse = await _client.PostAsync("https://localhost:7042/token", data);
-            var authContent = await authResponse.Content.ReadAsStringAsync();
+            var authResult = await _client.PostAsync("https://localhost:7042/token", data);
+            var authContent = await authResult.Content.ReadAsStringAsync();
 
-            if (authResponse.IsSuccessStatusCode == false)
+            if (authResult.IsSuccessStatusCode == false)
             {
                 return null;
             }
@@ -49,7 +49,7 @@ namespace Portal.Authentication
             return result;
         }
 
-        public async Task LogoutAsync()
+        public async Task Logout()
         {
             await _localStorage.RemoveItemAsync("authToken");
             ((AuthStateProvider)_authStateProvider).NotifyUserLogOut();

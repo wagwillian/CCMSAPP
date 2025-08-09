@@ -12,10 +12,7 @@ namespace CCSMDataManager.Entities
         public string Turma { get; set; } = string.Empty;
         [Required]
         [MaxLength(200)]
-        public string HorarioAula { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(200)]
-        public string eMail { get; set; } = string.Empty;
+        public string HorarioAula { get; set; } = string.Empty;          
         [Required]
         [MaxLength(200)]
         public string Disciplina { get; set; } = string.Empty;
