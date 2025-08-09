@@ -39,6 +39,8 @@ namespace CCSMDataManager.Services
             var hashedPassword = new PasswordHasher<User>().HashPassword(user, request.Password);
 
             user.Email = request.Email;
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
             user.PasswordHash = hashedPassword;
 
             context.Users.Add(user);
