@@ -8,6 +8,9 @@ namespace Portal.Authentication.Models
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(50)]
+        public string Turno { get; set; } = string.Empty;
+        [Required]
         [MaxLength(20)]
         public string Turma { get; set; } = string.Empty;
         [Required]

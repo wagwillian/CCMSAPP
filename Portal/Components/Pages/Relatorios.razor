@@ -1,26 +1,93 @@
-﻿@using Portal.Authentication.Models
+﻿@using CCSMDataManager.Entities
+@using Portal.Authentication.Models
 @using System
+@using CCSMDataManager
 
-<h3>Relatorios</h3>
 
 @page "/relatorios"
 
+<PageTitle>Relatórios</PageTitle>
+
+<h3>Relatório Sala</h3>
+
+<EditForm Model = "@novoRelatorio" OnValidSubmit="SubmitForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3">
+        <label for="sala" class="form-label">Sala</label>
+        <InputSelect id="sala" class="form-select" @bind-Value="novoRelatorio.Turma">
+            <option value="">Selecione uma sala:</option>
+            @foreach (var sala in Salas)
+            {
+                <option value="@sala">@sala</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => novoRelatorio.Turma)" />
+    </div>
+    <div class="mb-3">
+        <label for="aula" class="form-label">Aula</label>
+        <InputSelect id="aula" class="form-select" @bind-Value="novoRelatorio.HorarioAula">
+            <option value="">Selecione o horário da aula:</option>
+            @foreach (var aula in Aula)
+            {
+                <option value="@aula">@aula</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => novoRelatorio.HorarioAula)" />
+    </div>
+    <div class="mb-3">
+        <label for="turno" class="form-label">Turno</label>
+        <InputSelect id="turno" class="form-select" @bind-Value="novoRelatorio.Turno">
+            <option value="">Selecione um turno:</option>
+            @foreach (var turno in Turnos)
+            {
+                <option value="@turno">@turno</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => novoRelatorio.Turno)" />
+    </div>
+    <div class="mb-3">
+        <label for="Barulho" class="form-label">Barulho</label>
+        <InputCheckbox id="Barulho" @bind-Value="novoRelatorio.Barulho">
+            <option value="">Havia barulho durante a aula?</option>            
+        </InputCheckbox>
+        <ValidationMessage For="@(() => novoRelatorio.Turno)" />
+    </div>
+    <div class="mb-3">
+        <label for="Comentários Adicionais" class="form-text">Comentários Adicionais</label>
+        <textarea id="comentarios" class="form-control" @bind="novoRelatorio.Comentario"></textarea>
+    </div>
+    </EditForm>
+    
+    
+@inject CCSMDataManager.Data.CCMSAPPDbContext dbContext;
 @code{
-    private readonly List<string> SalasManha = new List<string>
+    private readonly List<string> Salas = new List<string>
     {
-        "6ºA", "7ºA", "8ºA", "9ºA", "9ºB", "9ºC", "9ºD", "9ºE", "1ºA", "1ºB", "1ºC", "1ºD", "1ºE", "1ºF", "2ºA", "2ºB", "2ºC", "3ºA", "3ºB", "3ºC"
+        "6ºA" ,"6ºB", "6ºC", "6ºD", "6ºE", "6ºF", "6ºG", "7ºA","7ºB", "7ºC", "7ºD", "7ºE", "7ºF", "7ºG", "8ºA","8ºB", "8ºC", "8ºD", "8ºE", "8ºF","8ºG", "9ºA", "9ºB", "9ºC", "9ºD", "9ºE","9ºF", "9ºG", "1ºA", "1ºB", "1ºC", "1ºD", "1ºE", "1ºF", "2ºA", "2ºB", "2ºC", "3ºA", "3ºB", "3ºC"
     };
 
-    private readonly List<string> SalasTarde = new List<string>
-    {
-        "6ºB", "6ºC", "6ºD", "6ºE", "6ºF", "6ºG", "7ºB", "7ºC", "7ºD", "7ºE", "7ºF", "7ºG", "8ºB", "8ºC", "8ºD", "8ºE", "8ºF","8ºG", "9ºF", "9ºG"
-    };
+
 
     private readonly List<int> Aula = new List<int>
     {
         1, 2, 3, 4, 5, 6
     };
 
+    private readonly List<string> Turnos = new List<string>
+    {
+        "Manhã", "Tarde"
+    };
+
     // Fix: Properly declare a property to hold the formatted date string
     public string Data { get; } = DateTime.Now.ToString("dd/MM/yyyy");
+
+    public RelatorioSala novoRelatorio = new RelatorioSala();
+
+    private async Task SubmitForm()
+    {
+        dbContext.RelatorioSalas.Add(novoRelatorio);
+        await dbContext.SaveChangesAsync();
+    }
+
 }

@@ -12,17 +12,19 @@ namespace CCSMDataManager.Entities
         public string Turma { get; set; } = string.Empty;
         [Required]
         [MaxLength(200)]
-        public string HorarioAula { get; set; } = string.Empty;          
-        [Required]
+        public string HorarioAula { get; set; } = string.Empty;    
         [MaxLength(200)]
-        public string Disciplina { get; set; } = string.Empty;
-        [Required]
+        public string Disciplina { get; set; } = string.Empty;        
         [MaxLength(500)]
-        public string Comentario { get; set; } = string.Empty;
-        [Required]
+        public string Comentario { get; set; } = string.Empty;        
         [MaxLength(50)]        
         public DateOnly Data { get; set; }
+        [MaxLength(50)]
+        public String Turno { get; set; }
         [Required]
+        [MaxLength(50)] 
+        public bool Barulho { get; set; }
+
         [MaxLength(200)]
         public User User { get; set; } = new User(); // Navigation property to User
 
