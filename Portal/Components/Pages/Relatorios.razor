@@ -1,5 +1,26 @@
-﻿<h3>Relatorios</h3>
+﻿@using Portal.Authentication.Models
+@using System
 
-@code {
+<h3>Relatorios</h3>
 
+@page "/relatorios"
+
+@code{
+    private readonly List<string> SalasManha = new List<string>
+    {
+        "6ºA", "7ºA", "8ºA", "9ºA", "9ºB", "9ºC", "9ºD", "9ºE", "1ºA", "1ºB", "1ºC", "1ºD", "1ºE", "1ºF", "2ºA", "2ºB", "2ºC", "3ºA", "3ºB", "3ºC"
+    };
+
+    private readonly List<string> SalasTarde = new List<string>
+    {
+        "6ºB", "6ºC", "6ºD", "6ºE", "6ºF", "6ºG", "7ºB", "7ºC", "7ºD", "7ºE", "7ºF", "7ºG", "8ºB", "8ºC", "8ºD", "8ºE", "8ºF","8ºG", "9ºF", "9ºG"
+    };
+
+    private readonly List<int> Aula = new List<int>
+    {
+        1, 2, 3, 4, 5, 6
+    };
+
+    // Fix: Properly declare a property to hold the formatted date string
+    public string Data { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 }

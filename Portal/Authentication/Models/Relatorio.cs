@@ -14,6 +14,8 @@ namespace Portal.Authentication.Models
         [MaxLength(20)]
         public string Aula { get; set; } = string.Empty;
         [Required]
+        public bool Barulho { get; set; }
+        [Required]
         [MaxLength(200)]
         public string Disciplina { get; set; } = string.Empty;
         [Required]
