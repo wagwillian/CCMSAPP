@@ -18,7 +18,7 @@ namespace CCSMDataManager.Entities
         [MaxLength(500)]
         public string Comentario { get; set; } = string.Empty;        
         [MaxLength(50)]        
-        public DateOnly Data { get; set; }
+        public DateTime Data { get; set; }
         [MaxLength(50)]
         public String Turno { get; set; }
         [Required]

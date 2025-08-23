@@ -75,7 +75,7 @@
         "Manhã", "Tarde"
     };
 
-    // Fix: Properly declare a property to hold the formatted date string
+    
     public string Data { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 
     public RelatorioSala novoRelatorio = new RelatorioSala();
@@ -85,13 +85,13 @@
         // Set the creation date just before saving
         novoRelatorio.Data = DateTime.Now;
 
-        // Use the injected DbContext to add the new report to the database
+       
         //dbContext.RelatorioSalas.Add(novoRelatorio);
         //await dbContext.SaveChangesAsync();
 
-        // Optional: Reset the form for the next entry or provide feedback to the user
+        
         novoRelatorio = new RelatorioSala();
-        StateHasChanged(); // Force the component to re-render with the new, empty model
+        StateHasChanged();
     }
 
 }
