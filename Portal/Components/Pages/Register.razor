@@ -1,6 +1,134 @@
 ﻿@page "/register"
-<h3>Cadastre-se</h3>
+@using CCSMDataManager.Models
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+<!-- User Registration Form Component -->
+<div class="container mx-auto p-4 md:p-8 bg-gray-50 rounded-lg shadow-xl max-w-md my-8">
+    <h3 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">Register New User</h3>
+    <hr class="mb-6 border-t-2 border-gray-200" />
+
+    <!-- EditForm for handling form submission and validation -->
+    <EditForm Model="@user" OnValidSubmit="@HandleValidSubmit" class="space-y-5">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-red-600 bg-red-100 border border-red-200 p-3 rounded-md" />
+
+        <!-- Email Input -->
+        <div class="flex items-center">
+            <!-- Added flex container -->
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1 w-32 shrink-0">Email:</label> <!-- Fixed width for label -->
+            <div class="flex-1">
+                <!-- Input takes remaining space -->
+                <InputText id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                           @bind-Value="user.Email" placeholder="Enter email" />
+                <ValidationMessage For="@(() => user.Email)" class="text-sm text-red-500 mt-1" />
+            </div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="flex items-center">
+            <!-- Added flex container -->
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1 w-32 shrink-0">Password:</label> <!-- Fixed width for label -->
+            <div class="flex-1">
+                <!-- Input takes remaining space -->
+                <InputText id="password" type="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                           @bind-Value="user.Password" placeholder="Enter password" />
+                <ValidationMessage For="@(() => user.Password)" class="text-sm text-red-500 mt-1" />
+            </div>
+        </div>
+
+        <!-- First Name Input -->
+        <div class="flex items-center">
+            <!-- Added flex container -->
+            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1 w-32 shrink-0">First Name:</label> <!-- Fixed width for label -->
+            <div class="flex-1">
+                <!-- Input takes remaining space -->
+                <InputText id="firstName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                           @bind-Value="user.FirstName" placeholder="Enter first name" />
+                <ValidationMessage For="@(() => user.FirstName)" class="text-sm text-red-500 mt-1" />
+            </div>
+        </div>
+
+        <!-- Last Name Input -->
+        <div class="flex items-center">
+            <!-- Added flex container -->
+            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1 w-32 shrink-0">Last Name:</label> <!-- Fixed width for label -->
+            <div class="flex-1">
+                <!-- Input takes remaining space -->
+                <InputText id="lastName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                           @bind-Value="user.LastName" placeholder="Enter last name" />
+                <ValidationMessage For="@(() => user.LastName)" class="text-sm text-red-500 mt-1" />
+            </div>
+        </div>
+
+        <!-- Role Select Input -->
+        <div class="flex items-center">
+            <!-- Added flex container -->
+            <label for="role" class="block text-sm font-medium text-gray-700 mb-1 w-32 shrink-0">Role:</label> <!-- Fixed width for label -->
+            <div class="flex-1">
+                <!-- Input takes remaining space -->
+                <InputSelect id="role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                             @bind-Value="user.Role">
+                    <option value="User">User</option>                    
+                </InputSelect>
+                <ValidationMessage For="@(() => user.Role)" class="text-sm text-red-500 mt-1" />
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-md shadow-lg transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+            Register
+        </button>
+    </EditForm>
+
+    <!-- Success/Error Message Display -->
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div class="mt-6 p-4 rounded-md text-center
+                        @(isError ? "bg-red-100 text-red-700 border border-red-200" : "bg-green-100 text-green-700 border border-green-200")">
+            @message
+        </div>
+    }
+</div>
 
 @code {
-    
+    // Instance of the UserDto to bind form inputs to
+    private UserDto user = new UserDto();
+    // Message to display after form submission
+    private string message = string.Empty;
+    // Flag to indicate if the message is an error
+    private bool isError = false;
+
+    /// <summary>
+    /// Handles the form submission when all validation passes.
+    /// </summary>
+    private async Task HandleValidSubmit()
+    {
+        isError = false;
+        message = "Registering user...";
+
+        try
+        {
+            // Simulate an API call or database interaction
+            await Task.Delay(1500); // Simulate network latency
+
+            // In a real application, you would send this 'user' object to an API
+            // or a service to save it to a database.
+            // Example: var response = await ApiService.RegisterUser(user);
+
+            // For demonstration, we just update the message
+            message = $"User '{user.Email}' registered successfully with role '{user.Role}'! Welcome, {user.FirstName}!";
+            Console.WriteLine($"Registered user: Email: {user.Email}, First Name: {user.FirstName}, Last Name: {user.LastName}, Role: {user.Role}");
+
+            // Optionally, reset the form after successful submission
+            user = new UserDto();
+        }
+        catch (Exception ex)
+        {
+            isError = true;
+            message = $"Registration failed: {ex.Message}";
+            Console.Error.WriteLine($"Registration error: {ex.Message}");
+        }
+    }
 }
