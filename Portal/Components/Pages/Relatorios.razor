@@ -47,7 +47,7 @@
         <ValidationMessage For="@(() => novoRelatorio.Turno)" />
     </div>
     <div class="mb-3">
-        <label for="Barulho" class="form-label">Barulho</label>
+        <label for="Barulho" class="form-label">Havia barulho durante a aula?</label>
         <InputCheckbox id="Barulho" @bind-Value="novoRelatorio.Barulho">
             <option value="">Havia barulho durante a aula?</option>            
         </InputCheckbox>
@@ -59,8 +59,7 @@
     </div>
     </EditForm>
     
-    
-@inject CCSMDataManager.Data.CCMSAPPDbContext dbContext;
+@*@inject CCSMDataManager.Data.CCMSAPPDbContext dbContext;*@
 @code{
     private readonly List<string> Salas = new List<string>
     {
@@ -86,8 +85,8 @@
 
     private async Task SubmitForm()
     {
-        dbContext.RelatorioSalas.Add(novoRelatorio);
-        await dbContext.SaveChangesAsync();
+        //dbContext.RelatorioSalas.Add(novoRelatorio);
+        //await dbContext.SaveChangesAsync();
     }
 
 }
