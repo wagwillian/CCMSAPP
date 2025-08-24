@@ -13,10 +13,12 @@ namespace CCSMDataManager.Controllers
     public class RelatoriosController : ControllerBase
     {
         private readonly IRelatorioService _relatorioService;
+        private readonly IImprimeRelatoriosService _imprimeRelatoriosService;
 
-        public RelatoriosController(IRelatorioService relatorioService)
+        public RelatoriosController(IRelatorioService relatorioService, IImprimeRelatoriosService imprimeRelatoriosService)
         {
             _relatorioService = relatorioService;
+            _imprimeRelatoriosService = imprimeRelatoriosService;
         }
 
         [HttpPost]        
@@ -34,6 +36,16 @@ namespace CCSMDataManager.Controllers
                 return userId;
             }
             return Guid.Empty;
+        }
+
+        [HttpPost("/imprimir")]
+        public async Task<IActionResult> Imprimir([FromBody] RelatorioImprimirDto relatorioImprimirDto)
+        {
+            var fileStream = await _imprimeRelatoriosService.OnPostExportarAsync(relatorioImprimirDto);
+            fileStream.Position = 0; // Reset stream position
+            var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var fileName = "RelatoriosSala.xlsx";
+            return File(fileStream, contentType, fileName);
         }
     }
 }

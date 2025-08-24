@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CCSMDataManager\CCSMDataManager.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Relatorios\" />
+  </ItemGroup>
+
 </Project>

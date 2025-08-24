@@ -7,13 +7,16 @@ namespace Portal.Authentication
 {
     public class AuthStateProvider : AuthenticationStateProvider
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        //private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
         private readonly AuthenticationState _anonymous;
 
-        public AuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
+        public AuthStateProvider(IHttpClientFactory httpClientFactory, ILocalStorageService localStorage)
         {
-            _httpClient = httpClient;
+            //_httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
             _localStorage = localStorage;
             _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
@@ -26,7 +29,8 @@ namespace Portal.Authentication
                 return _anonymous;
             }
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            var httpClient = _httpClientFactory.CreateClient("PortalAPI");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
 
             return new AuthenticationState(
                         new ClaimsPrincipal(

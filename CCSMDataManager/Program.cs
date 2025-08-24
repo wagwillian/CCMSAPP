@@ -42,6 +42,7 @@ builder.Services.AddDbContext<CCMSAPPDbContext>(options =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRelatorioService, RelatorioService>();
+builder.Services.AddScoped<IImprimeRelatoriosService, ImprimeRelatoriosService>();
 
 var app = builder.Build();
 

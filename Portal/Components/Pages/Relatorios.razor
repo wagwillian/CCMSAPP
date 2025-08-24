@@ -1,13 +1,16 @@
-﻿@using Portal.Authentication.Models
+﻿@using Blazored.LocalStorage
+@using Portal.Authentication.Models
 @using System
 @using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @using Portal.Dto
+@using System.Net.Http.Headers
 @page "/relatorios"
 @attribute [Authorize(Roles = "User")]
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IHttpClientFactory HttpClientFactory
+@inject ILocalStorageService LocalStorageService
 
 
 
@@ -90,14 +93,11 @@
     
 
     private async Task SubmitForm()
-    {
-        
-        
-        
+    {                      
+        var token = await LocalStorageService.GetItemAsync<string>("authToken");        
         HttpClient httpClient = HttpClientFactory.CreateClient("PortalAPI");
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         await httpClient.PostAsJsonAsync("/api/Relatorios", novoRelatorio);
-
-
     }
 
 

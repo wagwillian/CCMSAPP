@@ -21,6 +21,8 @@ namespace CCSMDataManager.Services
                 Turma = relatorioDto.Turma,
                 HorarioAula = relatorioDto.HorarioAula,
                 UserId = userId,
+                Turno = relatorioDto.Turno,
+                Barulho = relatorioDto.Barulho,
                 Comentario = relatorioDto.Comentario,
                 Data = relatorioDto.Data
             };
