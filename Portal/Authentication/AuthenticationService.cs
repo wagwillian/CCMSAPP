@@ -21,13 +21,7 @@ namespace Portal.Authentication
 
         public async Task<string> Login(AuthenticationUserModel userForAuthentication)
         {
-            //var data = new FormUrlEncodedContent(new[]
-            //{
-            //    new KeyValuePair<string, string>("grant_type", "password"),
-            //    new KeyValuePair<string, string>("username", userForAuthentication.Email),
-            //    new KeyValuePair<string, string>("password", userForAuthentication.Password)
-            // });
-
+          
             var data = JsonSerializer.Serialize(userForAuthentication);
             var stringContent = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
 
@@ -37,10 +31,7 @@ namespace Portal.Authentication
             if (authResult.IsSuccessStatusCode == false)
             {
                 return null;
-            }
-            //var result = JsonSerializer.Deserialize<AuthenticatedUserModel>(
-            //    authContent,
-            //        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }           
 
             await _localStorage.SetItemAsync("authToken", authContent);
 

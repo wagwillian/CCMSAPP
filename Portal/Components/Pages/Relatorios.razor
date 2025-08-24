@@ -1,12 +1,16 @@
-﻿@using CCSMDataManager.Entities
-@using Portal.Authentication.Models
+﻿@using Portal.Authentication.Models
 @using System
-@using CCSMDataManager
-@using CCSMDataManager.Data
 @using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@using Portal.Dto
 @page "/relatorios"
 @attribute [Authorize(Roles = "User")]
-@*inject CCSMDataManager.Data.CCMSAPPDbContext dbContext;*@
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IHttpClientFactory HttpClientFactory
+
+
+
 
 <PageTitle>Relatórios</PageTitle>
 
@@ -79,23 +83,25 @@
         "Manhã", "Tarde"
     };
 
-    
-    public string Data { get; } = DateTime.Now.ToString("dd/MM/yyyy");
 
-    public RelatorioSala novoRelatorio = new RelatorioSala();
+    public string Data { get; } = DateTime.Now.ToString("dd/MM/yyyy");
+    public RelatorioSalaDto novoRelatorio = new RelatorioSalaDto();
+
+    
 
     private async Task SubmitForm()
     {
-        // Set the creation date just before saving
-        novoRelatorio.Data = DateTime.Now;
-
-       
-        //dbContext.RelatorioSalas.Add(novoRelatorio);
-        //await dbContext.SaveChangesAsync();
-
         
-        novoRelatorio = new RelatorioSala();
-        StateHasChanged();
+        
+        
+        HttpClient httpClient = HttpClientFactory.CreateClient("PortalAPI");
+        await httpClient.PostAsJsonAsync("/api/Relatorios", novoRelatorio);
+
+
     }
 
+
+
+   
+      
 }

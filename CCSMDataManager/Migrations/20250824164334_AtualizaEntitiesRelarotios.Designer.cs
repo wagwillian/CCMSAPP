@@ -4,6 +4,7 @@ using CCSMDataManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CCSMDataManager.Migrations
 {
     [DbContext(typeof(CCMSAPPDbContext))]
-    partial class CCMSAPPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250824164334_AtualizaEntitiesRelarotios")]
+    partial class AtualizaEntitiesRelarotios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +41,9 @@ namespace CCSMDataManager.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<DateTimeOffset>("Data")
+                    b.Property<DateTime>("Data")
                         .HasMaxLength(50)
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Disciplina")
                         .IsRequired()

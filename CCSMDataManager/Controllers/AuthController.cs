@@ -41,6 +41,7 @@ namespace CCSMDataManager.Controllers
 
             return Ok(token);
         }
+        
 
         [Authorize]
         [HttpGet]

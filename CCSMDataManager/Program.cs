@@ -41,6 +41,7 @@ builder.Services.AddDbContext<CCMSAPPDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CCMSAPPDatabase")));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRelatorioService, RelatorioService>();
 
 var app = builder.Build();
 

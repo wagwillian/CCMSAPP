@@ -18,14 +18,13 @@ namespace CCSMDataManager.Entities
         [MaxLength(500)]
         public string Comentario { get; set; } = string.Empty;        
         [MaxLength(50)]        
-        public DateTime Data { get; set; }
+        public DateTimeOffset Data { get; set; }
         [MaxLength(50)]
-        public String Turno { get; set; }
-        [Required]
-        [MaxLength(50)] 
+        public String Turno { get; set; }       
+        
         public bool Barulho { get; set; }
-
-        [MaxLength(200)]
+        public Guid UserId { get; set; }
+        
         public User User { get; set; } = new User(); // Navigation property to User
 
 
