@@ -2,14 +2,17 @@
 @using Portal.Authentication.Models
 @using System
 @using CCSMDataManager
-@using CCSMDataManager.Data // Add this line if it's not already there
-
+@using CCSMDataManager.Data
+@using Microsoft.AspNetCore.Authorization
 @page "/relatorios"
+@attribute [Authorize(Roles = "User")]
 @*inject CCSMDataManager.Data.CCMSAPPDbContext dbContext;*@
 
 <PageTitle>Relatórios</PageTitle>
 
 <h3>Relatório Sala</h3>
+
+
 
 <EditForm Model="@novoRelatorio" OnValidSubmit="SubmitForm">
     <DataAnnotationsValidator />
@@ -58,6 +61,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Enviar Relatório</button>
 </EditForm>
+
 
 @code {
     private readonly List<string> Salas = new List<string>
