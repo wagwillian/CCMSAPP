@@ -1,7 +1,12 @@
 ﻿using Blazored.LocalStorage;
+using CCSMDataManager.Entities;
+using CCSMDataManager.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Portal.Authentication.Models;
+using Portal.Dto;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace Portal.Authentication
@@ -48,6 +53,31 @@ namespace Portal.Authentication
             await _localStorage.RemoveItemAsync("authToken");
             ((AuthStateProvider)_authStateProvider).NotifyUserLogOut();
             _client.DefaultRequestHeaders.Authorization = null;
+
+        }
+        public async Task Register(RegisterUserDto registerUserDto)
+        {
+            var json = JsonSerializer.Serialize(registerUserDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await _client.PostAsync("https://localhost:7042/api/Auth/Register", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"User registered successfully: {result}");
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {error}");
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"Request error: {e.Message}");
+            }
 
         }
     }

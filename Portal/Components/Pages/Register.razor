@@ -1,7 +1,11 @@
 ﻿@page "/register"
-@using CCSMDataManager.Models
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
+@using Portal.Dto
+@inject IHttpClientFactory HttpClientFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavManager
+
 
 <!-- User Registration Form Component -->
 <div class="container mx-auto p-4 md:p-8 bg-gray-50 rounded-lg shadow-xl max-w-md my-8">
@@ -94,11 +98,13 @@
 
 @code {
     // Instance of the UserDto to bind form inputs to
-    private UserDto user = new UserDto();
+    private RegisterUserDto user = new RegisterUserDto();
     // Message to display after form submission
     private string message = string.Empty;
     // Flag to indicate if the message is an error
     private bool isError = false;
+
+    public RegisterUserDto registerUserDto = new RegisterUserDto();
 
     /// <summary>
     /// Handles the form submission when all validation passes.
@@ -107,22 +113,14 @@
     {
         isError = false;
         message = "Registering user...";
+        
 
         try
         {
-            // Simulate an API call or database interaction
-            await Task.Delay(1500); // Simulate network latency
-
-            // In a real application, you would send this 'user' object to an API
-            // or a service to save it to a database.
-            // Example: var response = await ApiService.RegisterUser(user);
-
-            // For demonstration, we just update the message
-            message = $"User '{user.Email}' registered successfully with role '{user.Role}'! Welcome, {user.FirstName}!";
-            Console.WriteLine($"Registered user: Email: {user.Email}, First Name: {user.FirstName}, Last Name: {user.LastName}, Role: {user.Role}");
-
-            // Optionally, reset the form after successful submission
-            user = new UserDto();
+            HttpClient httpClient = HttpClientFactory.CreateClient("PortalAPI");
+            await httpClient.PostAsJsonAsync("/api/Auth/Register", registerUserDto);
+            NavManager.NavigateTo("/relatorios");
+            
         }
         catch (Exception ex)
         {
